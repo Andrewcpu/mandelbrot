@@ -5,7 +5,38 @@
         <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
-        <ImplicitUsings>enable</ImplicitUsings>
+<!--        <PublishSingleFile>true</PublishSingleFile>  &lt;!&ndash; Enable single file publish &ndash;&gt;-->
+<!--        <RuntimeIdentifier>win-x64</RuntimeIdentifier>  &lt;!&ndash; Specify target platform &ndash;&gt;-->
+        <SelfContained>true</SelfContained>  <!-- Include .NET runtime -->
+        <FodyWeaversPath>FodyWeavers.xml</FodyWeaversPath>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Costura.Fody" Version="5.0.0" />
+        <PackageReference Include="Fody" Version="6.6.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="MandelbrotViewer.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <None Include="mandelbrot_support.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CosturaInclude>true</CosturaInclude> <!-- Ensures it is embedded -->
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ClCompile Include="mandelbrot.cu" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net8.0-windows\mandelbrot_support.dll" />
+      <None Include="bin\Debug\net8.0-windows\mandelbrot_support.exp" />
+      <None Include="bin\Debug\net8.0-windows\mandelbrot_support.lib" />
+    </ItemGroup>
 
 </Project>
